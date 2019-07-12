@@ -1,0 +1,116 @@
+package model.dao;
+
+import constants.SQL;
+import db.DataSource;
+import model.entity.UserInfo;
+import org.apache.commons.dbcp.BasicDataSource;
+
+import java.sql.*;
+
+/**
+ * DAO used to access the table 'User_info'
+ */
+public class UserInfoDao {
+    private static BasicDataSource dataSource;
+    private static PreparedStatement pstmt;
+    private static ResultSet rs;
+    private static Connection connection;
+
+    static {
+        dataSource = DataSource.getInstance();
+        pstmt = null;
+        rs = null;
+        connection = null;
+    }
+
+    public static UserInfo create(String truck, String status,
+                                  String capacity, Integer userID) {
+        UserInfo userInfo = new UserInfo();
+        try {
+            connection = dataSource.getConnection();
+            pstmt = connection.prepareStatement(SQL.CREATE_USER_INFO,
+                    Statement.RETURN_GENERATED_KEYS);
+            setValue(truck, status, capacity, userID);
+            rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                userInfo.setId(rs.getInt(1));
+                userInfo.setTruck(truck);
+                userInfo.setStatus(status);
+                userInfo.setCapacity(capacity);
+                userInfo.setUserID(userID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                pstmt.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return userInfo;
+    }
+
+    public static UserInfo findInfoByID(Integer id) {
+        UserInfo info = new UserInfo();
+        try {
+            connection = dataSource.getConnection();
+            pstmt = connection.prepareStatement(SQL.FIND_INFO_BYID);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                info.setId(rs.getInt("id"));
+                info.setTruck(rs.getString("truck"));
+                info.setStatus(rs.getString("status"));
+                info.setCapacity(rs.getString("capacity"));
+                info.setUserID(id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+                pstmt.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return info;
+    }
+
+    public static UserInfo update(String truck, String status, String capacity, Integer userID) {
+        UserInfo info = new UserInfo();
+        try {
+            connection = dataSource.getConnection();
+            pstmt = connection.prepareStatement(SQL.UPDATE_USER_INFO);
+            setValue(truck, status, capacity, userID);
+            info.setTruck(truck);
+            info.setStatus(status);
+            info.setCapacity(capacity);
+            info.setUserID(userID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                pstmt.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return info;
+    }
+
+    private static void setValue(String truck, String status, String capacity, Integer userID) throws SQLException {
+        pstmt.setString(1, truck);
+        pstmt.setString(2, status);
+        pstmt.setString(3, capacity);
+        pstmt.setInt(4, userID);
+        pstmt.executeUpdate();
+    }
+
+}
