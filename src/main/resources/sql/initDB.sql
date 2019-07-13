@@ -22,20 +22,27 @@ CREATE TABLE orders(
                      distance VARCHAR (10) NOT NULL,
                      status VARCHAR(15) CHECK (status IN('open','progress','close','cancel')),
                      creation_date DATETIME DEFAULT NOW(),
-                     user_id INT NOT NULL REFERENCES users(id)
+                     user_id INT NOT NULL ,
+                     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE user_info(
-                      id INT PRIMARY KEY AUTO_INCREMENT,
-                      truck VARCHAR (30) NOT NULL ,
-                      status VARCHAR (15) NOT NULL CHECK (status IN('ready','progress','repair')) ,
-                      capacity VARCHAR (10) NOT NULL ,
-                      user_id INT NOT NULL REFERENCES users(id)
-                      ON DELETE CASCADE
+                        id INT PRIMARY KEY AUTO_INCREMENT,
+                        truck VARCHAR (30) NOT NULL ,
+                        status VARCHAR (15) NOT NULL /*CHECK (status IN('ready','progress','repair'))*/ ,
+                        capacity VARCHAR (10) NOT NULL ,
+                        user_id INT NOT NULL ,
+                        FOREIGN KEY (user_id) REFERENCES users(id)
+
+
 );
+
 
 CREATE TABLE request(
                       id INT PRIMARY KEY AUTO_INCREMENT,
                       user_id INT NOT NULL ,
-                      order_id INT NOT NULL
+                      order_id INT NOT NULL,
+                      FOREIGN KEY (user_id) REFERENCES users (id),
+                      FOREIGN KEY (order_id) REFERENCES orders(id)
+
 );

@@ -2,11 +2,10 @@ body {
     /*
     background-image: url("http://wallpapers-images.ru/1920x1080/cars/wallpapers/wallpapers-cars-56.jpg");
     */
+    background: url(/img/image2.jpg);
     /*
-    background-image: url(img/image2.jpg);
-    */
     background: radial-gradient(circle farthest-corner at 100px 50px, #FBF2EB, #352A3B);
-
+    */
 
 }
 .block {
