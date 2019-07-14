@@ -2,8 +2,8 @@ package service;
 
 import exceptions.DaoException;
 import exceptions.ValidationException;
-import model.dao.UserInfoDao;
-import model.entity.UserInfo;
+import dao.UserInfoDao;
+import entity.UserInfo;
 
 import static utils.ValidatorUtils.isValid;
 

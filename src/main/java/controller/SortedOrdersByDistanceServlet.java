@@ -2,7 +2,7 @@ package controller;
 
 import exceptions.DaoException;
 import exceptions.GlobalExceptionHandler;
-import model.entity.Order;
+import entity.Order;
 import service.OrderService;
 import utils.constants.Path;
 

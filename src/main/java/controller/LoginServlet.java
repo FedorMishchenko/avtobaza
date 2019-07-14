@@ -3,7 +3,7 @@ package controller;
 import exceptions.DaoException;
 import exceptions.GlobalExceptionHandler;
 import exceptions.ValidationException;
-import model.entity.UserAccount;
+import entity.UserAccount;
 import service.UserService;
 import utils.SecurityUtils;
 import utils.constants.Path;

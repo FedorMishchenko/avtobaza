@@ -2,9 +2,9 @@ package service;
 
 import exceptions.DaoException;
 import exceptions.ValidationException;
-import model.dao.UserDao;
-import model.entity.Request;
-import model.entity.UserAccount;
+import dao.UserDao;
+import entity.Request;
+import entity.UserAccount;
 
 import java.util.List;
 

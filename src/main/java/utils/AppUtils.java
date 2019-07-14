@@ -1,6 +1,7 @@
 package utils;
 
-import model.entity.*;
+import entity.UserAccount;
+
 import java.util.HashMap;
 import java.util.Map;
 

@@ -1,7 +1,7 @@
 package utils;
 
 import config.SecurityConfig;
-import model.entity.UserAccount;
+import entity.UserAccount;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

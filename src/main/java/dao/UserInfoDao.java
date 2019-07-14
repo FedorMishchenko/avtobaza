@@ -1,9 +1,9 @@
-package model.dao;
+package dao;
 
 import utils.constants.SQL;
 import db.DataSource;
 import exceptions.DaoException;
-import model.entity.UserInfo;
+import entity.UserInfo;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
 

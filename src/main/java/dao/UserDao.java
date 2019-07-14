@@ -1,11 +1,11 @@
-package model.dao;
+package dao;
 
 import config.SecurityConfig;
 import utils.constants.SQL;
 import db.DataSource;
 import exceptions.DaoException;
-import model.entity.Request;
-import model.entity.UserAccount;
+import entity.Request;
+import entity.UserAccount;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
 

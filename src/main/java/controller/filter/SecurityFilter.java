@@ -1,7 +1,7 @@
 package controller.filter;
 
 import config.request.UserRoleRequestWrapper;
-import model.entity.UserAccount;
+import entity.UserAccount;
 import utils.AppUtils;
 import utils.SecurityUtils;
 import utils.constants.Path;

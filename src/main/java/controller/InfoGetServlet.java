@@ -2,8 +2,8 @@ package controller;
 
 import exceptions.DaoException;
 import exceptions.GlobalExceptionHandler;
-import model.entity.UserAccount;
-import model.entity.UserInfo;
+import entity.UserAccount;
+import entity.UserInfo;
 import service.UserInfoService;
 import utils.constants.Path;
 

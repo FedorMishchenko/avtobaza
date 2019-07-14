@@ -2,8 +2,8 @@ package service;
 
 import exceptions.DaoException;
 import exceptions.ValidationException;
-import model.dao.OrderDao;
-import model.entity.Order;
+import dao.OrderDao;
+import entity.Order;
 
 import java.util.Comparator;
 import java.util.List;
