@@ -33,9 +33,6 @@ public class ManagerTaskServlet extends HttpServlet implements Serializable {
         request.getSession().setAttribute("errorMassage", "");
         if(request.getParameter("approveUserId") != null &&
                 request.getParameter("approveOrderId") != null) {
-            System.out.println(request.getParameter("approveUserId"));
-            System.out.println(request.getParameter("approveUserId"));
-            System.out.println(request.getParameter("approveOrderId"));
             try {
                 OrderService.approveOrder(request.getParameter("approveUserId"),
                         request.getParameter("approveOrderId"));

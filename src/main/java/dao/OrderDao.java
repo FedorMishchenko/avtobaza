@@ -42,7 +42,6 @@ public class OrderDao {
                 pstmt.setString(2, destination);
                 pstmt.setString(3, distance);
                 pstmt.setString(4, status);
-               /* pstmt.setInt(5, Integer.valueOf(user_id));*/
                 pstmt.executeUpdate();
                 rs = pstmt.getGeneratedKeys();
                 if (rs.next()) {
@@ -205,6 +204,7 @@ public class OrderDao {
     public static void approveOrder(String userId, String orderId) throws DaoException {
         try {
             connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
             pstmt = connection.prepareStatement(SQL.APPROVE_ORDER);
             pstmt.setInt(1, Integer.valueOf(userId));
             pstmt.setInt(2, Integer.valueOf(orderId));
@@ -214,12 +214,19 @@ public class OrderDao {
             pstmt.setInt(1, Integer.valueOf(userId));
             pstmt.setInt(2, Integer.valueOf(orderId));
             pstmt.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             LOGGER.warn(e.getMessage());
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                /*NOP*/
+            }
             throw new DaoException();
         }finally {
             try {
                 pstmt.close();
+                connection.setAutoCommit(true);
                 connection.close();
             } catch (SQLException e) {
                 LOGGER.warn(e.getMessage());
