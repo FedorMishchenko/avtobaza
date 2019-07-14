@@ -19,7 +19,7 @@
 <h3>${deleteUser}</h3>
 <form method="POST" action="${pageContext.request.contextPath}/adminTask">
     <input type="text" pattern="([0-9]+)" minlength="1" maxlength="11"
-           placeholder="${userId}" name="deleteUserId">
+           placeholder="${userId}" name="deleteUserId" required>
     <input type="submit" value="${delete}">
 </form>
 

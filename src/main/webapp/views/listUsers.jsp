@@ -19,5 +19,10 @@
         </c:forEach>
     </select>
 </div>
+<br/>
+<c:if test="${errorMassage != null}">
+    <p class="text-typing">${errorMassage}</p>
+</c:if>
+<jsp:include page="userInfo.jsp"></jsp:include>
 </body>
 </html>

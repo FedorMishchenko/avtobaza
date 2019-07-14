@@ -1,4 +1,4 @@
-package constants;
+package utils.constants;
 
 /**
  * Utility class contains SQL queries
@@ -18,9 +18,9 @@ public final class SQL {
     public static final String SET_USER_ROLE = "UPDATE users SET role=? WHERE id=?";
 
     /**
-     * SQL queries for Table 'config.request'
+     * SQL queries for Table 'request'
      */
-    public static final String MAKE_REQUEST = "INSERT INTO config.request VALUES (DEFAULT ,?,?)";
+    public static final String MAKE_REQUEST = "INSERT INTO request VALUES (DEFAULT ,?,?)";
     public static final String FIND_REQUESTS = "SELECT * FROM request";
     public static final String DELETE_REQUEST = "DELETE FROM request WHERE user_id=? AND order_id=?";
 
@@ -29,7 +29,7 @@ public final class SQL {
      */
     public static final String CREATE_ORDER = "INSERT INTO orders " +
             "(id, start_point, destination, distance, status, creation_date, user_id)" +
-            " VALUES (DEFAULT,?,?,?,?,DEFAULT,?)";
+            " VALUES (DEFAULT,?,?,?,?,DEFAULT,DEFAULT)";
     public static final String REMOVE_ORDER = "DELETE FROM orders WHERE id=?";
     public static final String GET_ALL_ORDERS = "SELECT * FROM orders";
     public static final String GET_ALL_ACTIVE_ORDERS = "SELECT * FROM orders WHERE status LIKE 'open'";

@@ -1,8 +1,11 @@
 package controller;
 
-import constants.Path;
+import exceptions.DaoException;
+import exceptions.GlobalExceptionHandler;
+import exceptions.ValidationException;
 import service.OrderService;
 import service.UserService;
+import utils.constants.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,30 +26,32 @@ public class AdminTaskServlet extends HttpServlet implements Serializable {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        if(request.getParameter("userName") != null){
-            UserService.create(
-                    request.getParameter("userName"),
-                    request.getParameter("password"),
-                    request.getParameter("role"),
-                    request.getParameter("phone"),
-                    request.getParameter("email"));
+        request.getSession().setAttribute("errorMassage", "");
+        try {
+            if (request.getParameter("userName") != null) {
+                UserService.create(
+                        request.getParameter("userName"),
+                        request.getParameter("password"),
+                        request.getParameter("role"),
+                        request.getParameter("phone"),
+                        request.getParameter("email"));
+            }
+            if (request.getParameter("deleteUserId") != null) {
+                UserService.delete(request.getParameter("deleteUserId"));
+            }
+            if (request.getParameter("deleteOrderId") != null) {
+                OrderService.delete(request.getParameter("deleteOrderId"));
+            }
+            if (request.getParameter("setUserRole") != null &&
+                    request.getParameter("setUserId") != null) {
+                UserService.setRole(request.getParameter("setUserRole"), request.getParameter("setUserId"));
+            }
+        } catch (DaoException | ValidationException e) {
+            GlobalExceptionHandler.handleException(e, request);
         }
-        if(request.getParameter("deleteUserId") != null){
-            UserService.delete(request.getParameter("deleteUserId"));
-        }
-        if(request.getParameter("deleteOrderId") != null){
-            OrderService.delete(request.getParameter("deleteOrderId"));
-        }
-        if(request.getParameter("setUserRole") != null &&
-                request.getParameter("setUserId")!= null ){
-            UserService.setRole(request.getParameter("setUserRole"),request.getParameter("setUserId"));
-        }
-
         request.getServletContext()
                 .getRequestDispatcher(Path.ADMIN_PAGE)
                 .forward(request, response);
-
     }
 
     @Override

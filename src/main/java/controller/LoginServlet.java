@@ -1,9 +1,12 @@
 package controller;
 
-import constants.Path;
+import exceptions.DaoException;
+import exceptions.GlobalExceptionHandler;
+import exceptions.ValidationException;
 import model.entity.UserAccount;
 import service.UserService;
 import utils.SecurityUtils;
+import utils.constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,9 +39,15 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.getSession().setAttribute("errorMassage", "");
         String userName = request.getParameter("userName").trim();
         String password = request.getParameter("password").trim();
-        UserAccount userAccount = UserService.findUser(userName, password);
+        UserAccount userAccount = new UserAccount();
+        try {
+            userAccount = UserService.findUser(userName, password);
+        } catch (ValidationException | DaoException e) {
+            GlobalExceptionHandler.handleException(e, request);
+        }
 
         if (userAccount.getRole() == null) {
             String errorMessage = "Invalid userName or Password";

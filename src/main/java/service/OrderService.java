@@ -1,5 +1,6 @@
 package service;
 
+import exceptions.DaoException;
 import exceptions.ValidationException;
 import model.dao.OrderDao;
 import model.entity.Order;
@@ -8,7 +9,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static utils.ValidatorUtils.MASSAGE;
 import static utils.ValidatorUtils.isValid;
 
 /**
@@ -18,54 +18,54 @@ import static utils.ValidatorUtils.isValid;
 public class OrderService {
 
     public static Order create(String startPoint, String destination,
-                               String distance, String status,String user_id){
+                               String distance, String status) throws DaoException, ValidationException {
         if(isValid(startPoint, destination, distance, status)){
-            return OrderDao.createOrder(startPoint, destination, distance, status, user_id);
+            return OrderDao.createOrder(startPoint, destination, distance, status);
         }else {
-            throw new ValidationException(MASSAGE);
+            throw new ValidationException();
         }
     }
 
-    public static Order findOrder(Integer id){
+    public static Order findOrder(Integer id) throws DaoException {
         return OrderDao.findOrder(id);
     }
 
-    public static void delete(String id){
+    public static void delete(String id) throws DaoException, ValidationException {
         if(isValid(id)) {
             OrderDao.delete(id);
         }else {
-            throw new ValidationException(MASSAGE);
+            throw new ValidationException();
         }
     }
 
-    public static List<Order> findAll(){
+    public static List<Order> findAll() throws DaoException {
         return OrderDao.findAll();
     }
 
-    public static List<Order> findAllOpen(){
+    public static List<Order> findAllOpen() throws DaoException {
         return OrderDao.findAllOpen();
     }
 
-    public static List<Order> findAll(Integer id){
+    public static List<Order> findAll(Integer id) throws DaoException {
         return OrderDao.findAll(id);
     }
 
 
-    public static List<Order> findAllSortedByID() {
+    public static List<Order> findAllSortedByID() throws DaoException {
         return OrderDao.findAll()
                 .stream()
                 .sorted(Comparator.comparing(Order::getId).reversed())
                 .collect(Collectors.toList());
     }
 
-    public static List<Order> findAllSortedByDistance() {
+    public static List<Order> findAllSortedByDistance() throws DaoException {
         return OrderDao.findAll()
                 .stream()
                 .sorted(Comparator.comparing(Order::getDistance))
                 .collect(Collectors.toList());
     }
 
-    public static List<Order> findAllSortedByDate() {
+    public static List<Order> findAllSortedByDate() throws DaoException {
 
         return OrderDao.findAll()
                 .stream()
@@ -73,15 +73,15 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    public static void closeOrder(String id) {
+    public static void closeOrder(String id) throws DaoException {
         OrderDao.closeOrder(id);
     }
 
-    public static void approveOrder(String userId, String orderId) {
+    public static void approveOrder(String userId, String orderId) throws DaoException {
         OrderDao.approveOrder(userId, orderId);
     }
 
-    public static List<Order> findAllSortedByUserID() {
+    public static List<Order> findAllSortedByUserID() throws DaoException {
         return OrderDao.findAll()
                 .stream()
                 .sorted(Comparator.comparing(Order::getUserId))

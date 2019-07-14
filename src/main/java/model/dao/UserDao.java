@@ -1,11 +1,13 @@
 package model.dao;
 
 import config.SecurityConfig;
-import constants.SQL;
+import utils.constants.SQL;
 import db.DataSource;
+import exceptions.DaoException;
 import model.entity.Request;
 import model.entity.UserAccount;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
  * DAO used to access the table 'users' and 'requests'
  */
 public class UserDao {
+    private static Logger LOGGER = Logger.getLogger(UserDao.class);
     private static BasicDataSource dataSource;
     private static PreparedStatement pstmt;
     private static ResultSet rs;
@@ -30,7 +33,7 @@ public class UserDao {
     }
 
     public static UserAccount createUser(String login, String password,
-                                         String role, String phone, String email) {
+                                         String role, String phone, String email) throws DaoException {
         UserAccount account = new UserAccount();
         if (role == null){
             role = SecurityConfig.ROLE_USER;
@@ -54,13 +57,14 @@ public class UserDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
 
@@ -68,7 +72,7 @@ public class UserDao {
     }
 
     public static UserAccount updateUser(Integer id, String login, String password,
-                                         String phone, String email) {
+                                         String phone, String email) throws DaoException {
         UserAccount account = new UserAccount();
         try {
             connection = dataSource.getConnection();
@@ -87,39 +91,41 @@ public class UserDao {
                 account.setEmail(email);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
         return account;
     }
 
-    public static void delete(String id) {
+    public static void delete(String id) throws DaoException {
         try {
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(SQL.REMOVE_USER);
             pstmt.setInt(1, Integer.valueOf(id));
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
     }
 
-    public static UserAccount findUser(String userName, String password) {
+    public static UserAccount findUser(String userName, String password) throws DaoException {
         UserAccount account = new UserAccount();
         try {
             connection = dataSource.getConnection();
@@ -131,20 +137,21 @@ public class UserDao {
                 account = getUserAccount();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
         return account;
     }
 
-    public static List<UserAccount> findAll() {
+    public static List<UserAccount> findAll() throws DaoException {
         List<UserAccount> list = new ArrayList<>();
         try {
             connection = dataSource.getConnection();
@@ -155,30 +162,21 @@ public class UserDao {
                 list.add(account);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
         return list;
     }
 
-    private static UserAccount getUserAccount() throws SQLException {
-        UserAccount account = new UserAccount();
-        account.setId(rs.getInt("id"));
-        account.setUserName(rs.getString("login"));
-        account.setRole(rs.getString("role"));
-        account.setPhone(rs.getString("phone"));
-        account.setEmail(rs.getString("email"));
-        return account;
-    }
-
-    public static void createRequest(Integer request_user_id, String request_order_id) {
+    public static void createRequest(Integer request_user_id, String request_order_id) throws DaoException {
         try {
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(SQL.MAKE_REQUEST,Statement.RETURN_GENERATED_KEYS);
@@ -187,18 +185,19 @@ public class UserDao {
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         }finally {
             try {
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
     }
 
-    public static List<Request> findRequests() {
+    public static List<Request> findRequests() throws DaoException {
         List<Request> list = new ArrayList<>();
         try {
             connection = dataSource.getConnection();
@@ -212,20 +211,21 @@ public class UserDao {
                 list.add(request);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         }finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
         return list;
     }
 
-    public static void setRole(String role, String userId) {
+    public static void setRole(String role, String userId) throws DaoException {
         try {
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(SQL.SET_USER_ROLE);
@@ -233,18 +233,19 @@ public class UserDao {
             pstmt.setInt(2, Integer.valueOf(userId));
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         }finally {
             try {
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
     }
 
-    public static List<UserAccount> findAllAdministration() {
+    public static List<UserAccount> findAllAdministration() throws DaoException {
         List<UserAccount> list = new ArrayList<>();
         try {
             connection = dataSource.getConnection();
@@ -255,18 +256,30 @@ public class UserDao {
                 list.add(account);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
         return list.stream()
                 .sorted(Comparator.comparing(UserAccount::getRole))
                 .collect(Collectors.toList());
+    }
+
+
+    private static UserAccount getUserAccount() throws SQLException {
+        UserAccount account = new UserAccount();
+        account.setId(rs.getInt("id"));
+        account.setUserName(rs.getString("login"));
+        account.setRole(rs.getString("role"));
+        account.setPhone(rs.getString("phone"));
+        account.setEmail(rs.getString("email"));
+        return account;
     }
 }

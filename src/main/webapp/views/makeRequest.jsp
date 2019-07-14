@@ -22,7 +22,7 @@
 <h3>${makeRequest}</h3>
 <form method="POST" action="${pageContext.request.contextPath}/userTask">
     <input type="text" pattern="([0-9]+)" minlength="1" maxlength="11"
-           placeholder="${orderId}" name="requestOrderId">
+           placeholder="${orderId}" name="requestOrderId" required>
     <input type="submit" value="${input}">
 </form>
 </body>

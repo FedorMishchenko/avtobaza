@@ -20,9 +20,9 @@
 <h3>${massage}</h3>
 <form method="POST" action="${pageContext.request.contextPath}/adminTask">
     <input type="text" pattern="(^)(admin|manager|user)($)"
-           placeholder="${userRole}" name="setUserRole">
+           placeholder="${userRole}" name="setUserRole" required>
     <input type="text" pattern="([0-9]+)" minlength="1" maxlength="11"
-           placeholder="${userId}" name="setUserId">
+           placeholder="${userId}" name="setUserId" required>
     <input type="submit" value="${input}">
 </form>
 <p class="text-typing"><strong><i>${role}</i></strong></p>

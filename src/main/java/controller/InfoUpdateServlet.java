@@ -1,9 +1,12 @@
 package controller;
 
-import constants.Path;
+import exceptions.DaoException;
+import exceptions.GlobalExceptionHandler;
+import exceptions.ValidationException;
 import model.entity.UserAccount;
 import model.entity.UserInfo;
 import service.UserInfoService;
+import utils.constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,15 +28,21 @@ public class InfoUpdateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.getSession().setAttribute("errorMassage", "");
         UserAccount account = (UserAccount) request.getSession().getAttribute("loginedUser");
         if (request.getParameter("truck") != null && request.getParameter("tr_status") != null &&
                 request.getParameter("capacity") != null) {
-            UserInfo info = UserInfoService.update(
-                    request.getParameter("truck"),
-                    request.getParameter("tr_status"),
-                    request.getParameter("capacity"),
-                    account.getId()
-            );
+            UserInfo info = new UserInfo();
+            try {
+                info = UserInfoService.update(
+                        request.getParameter("truck"),
+                        request.getParameter("tr_status"),
+                        request.getParameter("capacity"),
+                        account.getId()
+                );
+            } catch (DaoException | ValidationException e) {
+                GlobalExceptionHandler.handleException(e, request);
+            }
             info.setUserID(account.getId());
             request.setAttribute("infoForm", info);
         }

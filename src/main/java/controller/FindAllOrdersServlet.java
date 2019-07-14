@@ -1,8 +1,10 @@
 package controller;
 
-import constants.Path;
+import exceptions.DaoException;
+import exceptions.GlobalExceptionHandler;
 import model.entity.Order;
 import service.OrderService;
+import utils.constants.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +18,8 @@ import java.util.List;
 public class FindAllOrdersServlet extends HttpServlet {
     private static final long serialVersionUID = -2291561463551887154L;
 
+    public FindAllOrdersServlet(){ super();}
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
@@ -25,7 +29,13 @@ public class FindAllOrdersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Order> list = OrderService.findAll();
+        request.getSession().setAttribute("errorMassage", "");
+        List<Order> list = null;
+        try {
+            list = OrderService.findAll();
+        } catch (DaoException e) {
+            GlobalExceptionHandler.handleException(e, request);
+        }
         request.getSession().setAttribute("list", list);
         request.getRequestDispatcher(Path.LIST_ORDERS).forward(request, response);
 

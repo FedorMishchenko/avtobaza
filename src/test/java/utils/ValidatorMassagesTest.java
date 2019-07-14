@@ -7,7 +7,7 @@ import org.junit.Test;
  *
  * Validation tests of application input parameters
  */
-public class ValidatorUtilsTest {
+public class ValidatorMassagesTest {
 
     @Test
     public void isValid() {

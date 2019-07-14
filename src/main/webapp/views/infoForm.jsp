@@ -51,5 +51,9 @@
         </tr>
     </table>
 </form>
+
+<c:if test="${errorMassage != null}">
+    <p class="text-typing">${errorMassage}</p>
+</c:if>
 </body>
 </html>

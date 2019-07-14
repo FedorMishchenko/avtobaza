@@ -1,8 +1,9 @@
 package controller;
 
-import constants.Path;
+import exceptions.DaoException;
 import exceptions.ValidationException;
 import service.OrderService;
+import utils.constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,9 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 
+import static utils.constants.Massages.*;
+
 @WebServlet("/orderForm")
 public class OrderFormServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = -2584908385925829836L;
+
+    public OrderFormServlet() { super();}
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,12 +33,15 @@ public class OrderFormServlet extends HttpServlet implements Serializable {
                         request.getParameter("startPoint").trim(),
                         request.getParameter("destination").trim(),
                         request.getParameter("distance").trim(),
-                        request.getParameter("status").trim(),
-                        /*config.request.getParameter("user_id").trim()*/"0"
+                        request.getParameter("status").trim()
                 );
-                request.setAttribute("massage", "order created successful");
-            }catch (ValidationException e){
-                request.setAttribute("massage", e.getMessage());
+                request.getSession().setAttribute("massage", ORDER_FORM_MASSAGE);
+            } catch (ValidationException | DaoException e) {
+                if (e.getClass().getSimpleName().equals("DaoException")) {
+                    request.getSession().setAttribute("massage", ERROR_MASSAGE);
+                } else {
+                    request.getSession().setAttribute("massage", ERROR_VALIDATION);
+                }
                 return;
             }
         }

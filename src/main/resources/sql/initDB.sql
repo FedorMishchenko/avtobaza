@@ -22,17 +22,21 @@ CREATE TABLE orders(
                      distance VARCHAR (10) NOT NULL,
                      status VARCHAR(15) CHECK (status IN('open','progress','close','cancel')),
                      creation_date DATETIME DEFAULT NOW(),
-                     user_id INT NOT NULL ,
+                     user_id INT
                      FOREIGN KEY (user_id) REFERENCES users(id)
+                      ON DELETE SET NULL
+                      ON UPDATE SET NULL
+
 );
 
 CREATE TABLE user_info(
                         id INT PRIMARY KEY AUTO_INCREMENT,
                         truck VARCHAR (30) NOT NULL ,
-                        status VARCHAR (15) NOT NULL /*CHECK (status IN('ready','progress','repair'))*/ ,
+                        status VARCHAR (15) NOT NULL CHECK (status IN('ready','progress','repair')) ,
                         capacity VARCHAR (10) NOT NULL ,
                         user_id INT NOT NULL ,
                         FOREIGN KEY (user_id) REFERENCES users(id)
+                        ON DELETE CASCADE
 
 
 );
@@ -40,9 +44,12 @@ CREATE TABLE user_info(
 
 CREATE TABLE request(
                       id INT PRIMARY KEY AUTO_INCREMENT,
-                      user_id INT NOT NULL ,
-                      order_id INT NOT NULL,
-                      FOREIGN KEY (user_id) REFERENCES users (id),
+                      user_id INT ,
+                      order_id INT ,
+                      FOREIGN KEY (user_id) REFERENCES users (id)
+                      ON DELETE SET NULL
+                      ON UPDATE SET NULL ,
                       FOREIGN KEY (order_id) REFERENCES orders(id)
-
+                      ON DELETE SET NULL
+                      ON UPDATE SET NULL
 );

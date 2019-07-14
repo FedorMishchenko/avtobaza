@@ -1178,7 +1178,6 @@
     <column id="297" parent="287" name="user_id">
       <Position>7</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="298" parent="287" name="user_id">
@@ -1195,6 +1194,8 @@
       <RefSchemaName>trucking_exchange</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>
+      <OnUpdate>set-null</OnUpdate>
+      <OnDelete>set-null</OnDelete>
     </foreign-key>
     <column id="301" parent="288" name="id">
       <Position>1</Position>
@@ -1206,13 +1207,11 @@
     <column id="302" parent="288" name="user_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="303" parent="288" name="order_id">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="304" parent="288" name="user_id">
@@ -1233,12 +1232,16 @@
       <RefSchemaName>trucking_exchange</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>
+      <OnUpdate>set-null</OnUpdate>
+      <OnDelete>set-null</OnDelete>
     </foreign-key>
     <foreign-key id="308" parent="288" name="request_ibfk_2">
       <ColNames>order_id</ColNames>
       <RefSchemaName>trucking_exchange</RefSchemaName>
       <RefTableName>orders</RefTableName>
       <RefColNames>id</RefColNames>
+      <OnUpdate>set-null</OnUpdate>
+      <OnDelete>set-null</OnDelete>
     </foreign-key>
     <column id="309" parent="289" name="id">
       <Position>1</Position>
@@ -1285,6 +1288,7 @@
       <RefSchemaName>trucking_exchange</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <column id="317" parent="290" name="id">
       <Position>1</Position>

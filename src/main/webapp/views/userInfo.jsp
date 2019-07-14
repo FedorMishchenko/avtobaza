@@ -22,9 +22,8 @@
 <h3>${userInfo}</h3>
 <form method="POST" action="${pageContext.request.contextPath}/info">
     <input type="text" pattern="([0-9]+)" minlength="1" maxlength="11"
-           placeholder="${userId}" name="userIdInfo">
+           placeholder="${userId}" name="userIdInfo" required>
     <input type="submit" value="${input}">
 </form>
-
 </body>
 </html>

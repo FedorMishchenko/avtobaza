@@ -1,9 +1,11 @@
 package model.dao;
 
-import constants.SQL;
+import utils.constants.SQL;
 import db.DataSource;
+import exceptions.DaoException;
 import model.entity.UserInfo;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 
@@ -11,6 +13,7 @@ import java.sql.*;
  * DAO used to access the table 'User_info'
  */
 public class UserInfoDao {
+    private static Logger LOGGER = Logger.getLogger(UserInfoDao.class);
     private static BasicDataSource dataSource;
     private static PreparedStatement pstmt;
     private static ResultSet rs;
@@ -24,7 +27,7 @@ public class UserInfoDao {
     }
 
     public static UserInfo create(String truck, String status,
-                                  String capacity, Integer userID) {
+                                  String capacity, Integer userID) throws DaoException {
         UserInfo userInfo = new UserInfo();
         try {
             connection = dataSource.getConnection();
@@ -40,21 +43,22 @@ public class UserInfoDao {
                 userInfo.setUserID(userID);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
 
         return userInfo;
     }
 
-    public static UserInfo findInfoByID(Integer id) {
+    public static UserInfo findInfoByID(Integer id) throws DaoException {
         UserInfo info = new UserInfo();
         try {
             connection = dataSource.getConnection();
@@ -69,20 +73,21 @@ public class UserInfoDao {
                 info.setUserID(id);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
         return info;
     }
 
-    public static UserInfo update(String truck, String status, String capacity, Integer userID) {
+    public static UserInfo update(String truck, String status, String capacity, Integer userID) throws DaoException {
         UserInfo info = new UserInfo();
         try {
             connection = dataSource.getConnection();
@@ -93,13 +98,14 @@ public class UserInfoDao {
             info.setCapacity(capacity);
             info.setUserID(userID);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
         return info;

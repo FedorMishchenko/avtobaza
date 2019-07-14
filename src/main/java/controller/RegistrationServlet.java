@@ -1,10 +1,14 @@
 package controller;
 
 
-import constants.Path;
+import config.SecurityConfig;
+import exceptions.DaoException;
+import exceptions.GlobalExceptionHandler;
+import exceptions.ValidationException;
 import model.entity.UserAccount;
 import service.UserService;
 import utils.SecurityUtils;
+import utils.constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,52 +17,56 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.Serializable;
 
 import static utils.AppUtils.getLoginedUser;
+import static utils.constants.Massages.ERROR_MASSAGE;
 
 @WebServlet("/registration")
-public class RegistrationServlet extends HttpServlet {
+public class RegistrationServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = -4795113449650215199L;
+
+    public RegistrationServlet() {
+        super();
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UserAccount loginedUser = getLoginedUser(request.getSession());
 
-        String role = "user";
+        request.getSession().setAttribute("errorMassage", "");
+        String role = SecurityConfig.ROLE_USER;
         if (loginedUser != null) {
-            if (loginedUser.getRole().equals("admin")) {
+            if (loginedUser.getRole().equals(SecurityConfig.ROLE_ADMIN)) {
                 role = request.getParameter("role").trim();
                 RequestDispatcher dispatcher
                         = this.getServletContext().getRequestDispatcher(Path.ADMIN_PAGE);
                 dispatcher.forward(request, response);
             }
         }
-        UserAccount userAccount = UserService.create(
-                request.getParameter("userName").trim(),
-                request.getParameter("password").trim(),
-                role,
-                request.getParameter("phone").trim(),
-                request.getParameter("email").trim());
-
+        UserAccount userAccount = null;
+        try {
+            userAccount = UserService.create(
+                    request.getParameter("userName").trim(),
+                    request.getParameter("password").trim(),
+                    role,
+                    request.getParameter("phone").trim(),
+                    request.getParameter("email").trim());
+        } catch (DaoException | ValidationException e) {
+            GlobalExceptionHandler.handleException(e, request);
+        }
 
         if (userAccount == null) {
-            String errorMessage = "Invalid userName or Password";
 
-            request.setAttribute("errorMessage", errorMessage);
+            request.setAttribute("errorMessage", ERROR_MASSAGE);
 
-            RequestDispatcher dispatcher //
+            RequestDispatcher dispatcher
                     = this.getServletContext().getRequestDispatcher(Path.REGISTRATION);
 
             dispatcher.forward(request, response);
             return;
         }
-        if(loginedUser == null){
-            SecurityUtils.redirect(request, response, userAccount);
-        }else {
-            SecurityUtils.redirect(request, response, loginedUser);
-        }
-
-
+        SecurityUtils.redirect(request, response, userAccount);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -24,6 +24,9 @@
         </c:forEach>
     </select>
 </div>
+<c:if test="${errorMassage != null}">
+    <p class="text-typing">${errorMassage}</p>
+</c:if>
 <footer>
     <jsp:include page="userInfo.jsp"></jsp:include>
 </footer>

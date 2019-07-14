@@ -27,8 +27,7 @@ public class AppContextListener implements ServletContextListener,
          initialized(when the Web application is deployed). 
          You can initialize servlet context related data here.
       */
-        LOGGER.debug("context initialized");
-        LOGGER.trace("context initialized");
+      LOGGER.info("Context initialized");
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
@@ -36,7 +35,7 @@ public class AppContextListener implements ServletContextListener,
          (the Web application) is undeployed or 
          Application Server shuts down.
       */
-        LOGGER.info("context destroyed");
+
     }
 
     // -------------------------------------------------------
@@ -44,12 +43,12 @@ public class AppContextListener implements ServletContextListener,
     // -------------------------------------------------------
     public void sessionCreated(HttpSessionEvent se) {
         /* Session is created. */
-        LOGGER.info("new session created");
+        LOGGER.info("New session created");
     }
 
     public void sessionDestroyed(HttpSessionEvent se) {
         /* Session is destroyed. */
-        LOGGER.info("session destroyed");
+        LOGGER.info("Session destroyed");
     }
 
     // -------------------------------------------------------
@@ -60,21 +59,17 @@ public class AppContextListener implements ServletContextListener,
       /* This method is called when an attribute 
          is added to a session.
       */
-
-      LOGGER.info(sbe.getName());
     }
 
     public void attributeRemoved(HttpSessionBindingEvent sbe) {
       /* This method is called when an attribute
          is removed from a session.
       */
-      LOGGER.info("attribute removed from session with id=" + sbe.getSession().getId());
     }
 
     public void attributeReplaced(HttpSessionBindingEvent sbe) {
       /* This method is invoked when an attibute
          is replaced in a session.
       */
-        LOGGER.info("attribute removed in session with id=" + sbe.getSession().getId());
     }
 }

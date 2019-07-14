@@ -1,10 +1,10 @@
-package constants;
+package utils.constants;
 
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Constants used in commands to access the page
+ * Utility class constants used in commands to access the page
  */
 public final class Path {
 

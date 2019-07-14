@@ -1,6 +1,6 @@
 package controller;
 
-import constants.Path;
+import utils.constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

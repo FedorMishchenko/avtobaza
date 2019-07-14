@@ -32,6 +32,11 @@
     <input type="hidden" name="redirectId" value="${param.redirectId}" />
     <jsp:include page="registrationForm.jsp"></jsp:include>
 </form>
+<br/>
+<c:if test="${errorMassage != null}">
+    <p class="text-typing">${errorMassage}</p>
+</c:if>
+<br/>
 <div class="block">
     <p class="text-typing"><strong><i>${phone}</i></strong></p>
     <p class="text-typing"><strong><i>${password}</i></strong></p>

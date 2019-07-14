@@ -1,5 +1,6 @@
 package service;
 
+import exceptions.DaoException;
 import exceptions.ValidationException;
 import model.dao.UserDao;
 import model.entity.Request;
@@ -16,56 +17,60 @@ import static utils.ValidatorUtils.*;
 public class UserService {
 
     public static UserAccount create(String login, String password,
-                                     String role, String phone, String email){
+                                     String role, String phone, String email) throws DaoException, ValidationException {
         if(isValid(login, password, role, phone, email)) {
             return UserDao.createUser(login, password, role, phone, email);
         }else {
-            throw new ValidationException(MASSAGE);
+            throw new ValidationException();
         }
     }
 
     public static UserAccount update(Integer id, String login, String password,
-                                      String phone, String email){
+                                      String phone, String email) throws ValidationException, DaoException {
         if(isValid(id, login, password, phone, email)) {
             return UserDao.updateUser(id, login, password, phone, email);
         }else {
-            throw new ValidationException(MASSAGE);
+            throw new ValidationException();
         }
     }
 
-    public static void delete(String id){
+    public static void delete(String id) throws ValidationException, DaoException {
         if(isValid(id)){
             UserDao.delete(id);
         }else {
-            throw new ValidationException(MASSAGE);
+            throw new ValidationException();
         }
     }
 
-    public static UserAccount findUser(String userName, String password){
+    public static UserAccount findUser(String userName, String password) throws ValidationException, DaoException {
         if(isValidLogin(userName, password)) {
             return UserDao.findUser(userName, password);
         }else {
-            throw new ValidationException(MASSAGE);
+            throw new ValidationException();
         }
     }
 
-    public static List<UserAccount> findAll(){
+    public static List<UserAccount> findAll() throws DaoException {
         return UserDao.findAll();
     }
 
-    public static void createRequest(Integer request_user_id, String request_order_id) {
+    public static void createRequest(Integer request_user_id, String request_order_id) throws DaoException {
         UserDao.createRequest(request_user_id, request_order_id);
     }
 
-    public static List<Request> findRequests() {
+    public static List<Request> findRequests() throws DaoException {
         return UserDao.findRequests();
     }
 
-    public static void setRole(String role, String userId) {
-        UserDao.setRole(role, userId);
+    public static void setRole(String role, String userId) throws DaoException, ValidationException {
+        if(isValidRole(role)) {
+            UserDao.setRole(role, userId);
+        }else {
+            throw new ValidationException();
+        }
     }
 
-    public static List<UserAccount> findAllAdministration() {
+    public static List<UserAccount> findAllAdministration() throws DaoException {
         return UserDao.findAllAdministration();
     }
 }

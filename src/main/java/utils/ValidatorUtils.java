@@ -1,24 +1,23 @@
 package utils;
 
-import constants.Regexp;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ValidatorUtils {
+import static config.SecurityConfig.*;
+import static utils.constants.Regexp.*;
 
-    public static final String MASSAGE = "invalid input data";
+public class ValidatorUtils {
 
     public static boolean isValid(String userId, String orderId) {
         if (userId == null || orderId == null) {
             return false;
         }
-        Matcher matcher = Pattern.compile(Regexp.DIGITS_REGEX).matcher(orderId);
+        Matcher matcher = Pattern.compile(DIGITS_REGEX).matcher(orderId);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.DIGITS_REGEX).matcher(userId);
+        matcher = Pattern.compile(DIGITS_REGEX).matcher(userId);
         return matcher.matches();
     }
 
@@ -26,7 +25,7 @@ public class ValidatorUtils {
         if (userId == null) {
             return false;
         }
-        Matcher matcher = Pattern.compile(Regexp.DIGITS_REGEX).matcher(userId);
+        Matcher matcher = Pattern.compile(DIGITS_REGEX).matcher(userId);
         return matcher.matches();
     }
 
@@ -35,17 +34,17 @@ public class ValidatorUtils {
         if (truck == null || status == null || capacity == null) {
             return false;
         }
-        Matcher matcher = Pattern.compile(Regexp.PASSWORD_REGEX).matcher(truck);
+        Matcher matcher = Pattern.compile(PASSWORD_REGEX).matcher(truck);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.INFO_STATUS_REGEX).matcher(status);
+        matcher = Pattern.compile(INFO_STATUS_REGEX).matcher(status);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.DIGITS_REGEX).matcher(capacity);
+        matcher = Pattern.compile(DIGITS_REGEX).matcher(capacity);
         return matcher.matches();
     }
 
@@ -55,27 +54,27 @@ public class ValidatorUtils {
                 phone == null || email == null) {
             return false;
         }
-        Matcher matcher = Pattern.compile(Regexp.PASSWORD_REGEX).matcher(login);
+        Matcher matcher = Pattern.compile(PASSWORD_REGEX).matcher(login);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.PASSWORD_REGEX).matcher(password);
+        matcher = Pattern.compile(PASSWORD_REGEX).matcher(password);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.ROLE_REGEX).matcher(role);
+        matcher = Pattern.compile(ROLE_REGEX).matcher(role);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.PHONE_REGEX).matcher(phone);
+        matcher = Pattern.compile(PHONE_REGEX).matcher(phone);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.EMAIL_REGEX).matcher(email);
+        matcher = Pattern.compile(EMAIL_REGEX).matcher(email);
         return matcher.matches();
     }
 
@@ -85,27 +84,27 @@ public class ValidatorUtils {
                 phone == null || email == null) {
             return false;
         }
-        Matcher matcher = Pattern.compile(Regexp.DIGITS_REGEX).matcher(String.valueOf(id));
+        Matcher matcher = Pattern.compile(DIGITS_REGEX).matcher(String.valueOf(id));
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.PASSWORD_REGEX).matcher(login);
+        matcher = Pattern.compile(PASSWORD_REGEX).matcher(login);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.PASSWORD_REGEX).matcher(password);
+        matcher = Pattern.compile(PASSWORD_REGEX).matcher(password);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.PHONE_REGEX).matcher(phone);
+        matcher = Pattern.compile(PHONE_REGEX).matcher(phone);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.EMAIL_REGEX).matcher(email);
+        matcher = Pattern.compile(EMAIL_REGEX).matcher(email);
         return matcher.matches();
     }
 
@@ -114,22 +113,22 @@ public class ValidatorUtils {
                 status == null) {
             return false;
         }
-        Matcher matcher = Pattern.compile(Regexp.WORDS_REGEX).matcher(startPoint);
+        Matcher matcher = Pattern.compile(WORDS_REGEX).matcher(startPoint);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.WORDS_REGEX).matcher(destination);
+        matcher = Pattern.compile(WORDS_REGEX).matcher(destination);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.DIGITS_REGEX).matcher(distance);
+        matcher = Pattern.compile(DIGITS_REGEX).matcher(distance);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.ORDER_STATUS_REGEX).matcher(status);
+        matcher = Pattern.compile(ORDER_STATUS_REGEX).matcher(status);
         return matcher.matches();
     }
 
@@ -137,12 +136,20 @@ public class ValidatorUtils {
         if (login == null || password == null) {
             return false;
         }
-        Matcher matcher = Pattern.compile(Regexp.WORDS_REGEX).matcher(login);
+        Matcher matcher = Pattern.compile(WORDS_REGEX).matcher(login);
         if (!matcher.matches()) {
             return false;
         }
         matcher.reset();
-        matcher = Pattern.compile(Regexp.PASSWORD_REGEX).matcher(password);
+        matcher = Pattern.compile(PASSWORD_REGEX).matcher(password);
         return matcher.matches();
+    }
+
+    public static boolean isValidRole(String role){
+        if(role.equals(ROLE_USER) || role.equals(ROLE_MANAGER)
+                || role.equals(ROLE_ADMIN)){
+            return true;
+        }
+        return false;
     }
 }

@@ -2,7 +2,7 @@ package config;
 
 import java.util.*;
 
-import static constants.Path.*;
+import static utils.constants.Path.*;
 
 /**
  * Security access web configurations

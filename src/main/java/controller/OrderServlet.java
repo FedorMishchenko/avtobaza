@@ -1,8 +1,10 @@
 package controller;
 
-import constants.Path;
+import exceptions.DaoException;
+import exceptions.GlobalExceptionHandler;
 import model.entity.Order;
 import service.OrderService;
+import utils.constants.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,16 +12,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/order")
-public class OrderServlet extends HttpServlet {
+public class OrderServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = -3118312440665956324L;
+
+    public OrderServlet(){ super();}
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Order> list = OrderService.findAllOpen();
+        request.getSession().setAttribute("errorMassage", "");
+        List<Order> list = new ArrayList<>();
+        try {
+            list = OrderService.findAllOpen();
+        } catch (DaoException e) {
+            GlobalExceptionHandler.handleException(e, request);
+        }
         request.getSession().setAttribute("list", list);
         request.getRequestDispatcher(Path.LIST_ORDERS).forward(request, response);
 

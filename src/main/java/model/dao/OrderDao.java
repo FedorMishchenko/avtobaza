@@ -1,13 +1,15 @@
 package model.dao;
 
-import constants.SQL;
+import utils.constants.SQL;
 import db.DataSource;
 import exceptions.DaoException;
 import model.entity.Order;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,10 +17,12 @@ import java.util.stream.Collectors;
  * DAO used to access the table 'orders'
  */
 public class OrderDao {
+    private static Logger LOGGER = Logger.getLogger(OrderDao.class);
     private static BasicDataSource dataSource;
     private static PreparedStatement pstmt;
     private static ResultSet rs;
     private static Connection connection;
+
 
     static {
         dataSource = DataSource.getInstance();
@@ -29,7 +33,7 @@ public class OrderDao {
 
 
     public static Order createOrder(String startPoint, String destination,
-                                    String distance, String status, String user_id) {
+                                    String distance, String status) throws DaoException {
             Order order = new Order();
             try {
                 connection = dataSource.getConnection();
@@ -38,7 +42,7 @@ public class OrderDao {
                 pstmt.setString(2, destination);
                 pstmt.setString(3, distance);
                 pstmt.setString(4, status);
-                pstmt.setInt(5, Integer.valueOf(user_id));
+               /* pstmt.setInt(5, Integer.valueOf(user_id));*/
                 pstmt.executeUpdate();
                 rs = pstmt.getGeneratedKeys();
                 if (rs.next()) {
@@ -49,21 +53,22 @@ public class OrderDao {
                     order.setStatus(status);
                 }
             } catch (SQLException e) {
-                throw new DaoException("An error occurred while saving. Please, try again");
+                LOGGER.warn(e.getMessage());
+                throw new DaoException();
             } finally {
                 try {
                     rs.close();
                     pstmt.close();
                     connection.close();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    LOGGER.warn(e.getMessage());
                 }
             }
             return order;
         }
 
 
-    public static Order findOrder(Integer id) {
+    public static Order findOrder(Integer id) throws DaoException {
         Order order = new Order();
         try {
             connection = dataSource.getConnection();
@@ -74,80 +79,86 @@ public class OrderDao {
                 setValue(order);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
         return order;
     }
 
 
-    public static void delete(String id) {
+    public static void delete(String id) throws DaoException {
         try {
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(SQL.REMOVE_ORDER);
             pstmt.setInt(1, Integer.valueOf(id));
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
     }
 
-    public static List<Order> findAll() {
+    public static List<Order> findAll() throws DaoException {
         List<Order> list = new ArrayList<>();
         try {
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(SQL.GET_ALL_ORDERS);
             createListOrders(list);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
-        return list;
+        return list.stream()
+                .sorted(Comparator.comparing(Order::getId).reversed())
+                .collect(Collectors.toList());
     }
 
-    public static List<Order> findAllOpen() {
+    public static List<Order> findAllOpen() throws DaoException {
         List<Order> list = new ArrayList<>();
         try {
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(SQL.GET_ALL_ACTIVE_ORDERS);
             createListOrders(list);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
         return list;
     }
 
 
-    public static List<Order> findAll(Integer id) {
+    public static List<Order> findAll(Integer id) throws DaoException {
         List<Order> list = new ArrayList<>();
         try {
             connection = dataSource.getConnection();
@@ -155,38 +166,43 @@ public class OrderDao {
             pstmt.setInt(1, id);
             createListOrders(list);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         } finally {
             try {
                 rs.close();
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
-        return list.stream().distinct().collect(Collectors.toList());
+        return list.stream()
+                .distinct()
+                .sorted(Comparator.comparing(Order::getId).reversed())
+                .collect(Collectors.toList());
     }
 
-    public static void closeOrder(String id) {
+    public static void closeOrder(String id) throws DaoException {
         try {
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(SQL.CLOSE_ORDER);
             pstmt.setInt(1, Integer.valueOf(id));
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         }finally {
             try {
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
     }
 
-    public static void approveOrder(String userId, String orderId) {
+    public static void approveOrder(String userId, String orderId) throws DaoException {
         try {
             connection = dataSource.getConnection();
             pstmt = connection.prepareStatement(SQL.APPROVE_ORDER);
@@ -199,13 +215,14 @@ public class OrderDao {
             pstmt.setInt(2, Integer.valueOf(orderId));
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
         }finally {
             try {
                 pstmt.close();
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.warn(e.getMessage());
             }
         }
     }

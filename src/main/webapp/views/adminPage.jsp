@@ -40,10 +40,11 @@ ${name} <b>${loginedUser.userName}</b>
 <a href="listUsers"class="a">${users}</a>
 <a href="admin"class="a">${admins}</a>
 
-<p style="color: red;">${errorMessage}</p>
-<jsp:include page="setUserRole.jsp"></jsp:include>
+<c:if test="${errorMassage != null}">
+    <p class="text-typing">${errorMassage}</p>
+</c:if>
 <br/>
-<jsp:include page="userInfo.jsp"></jsp:include>
+<jsp:include page="setUserRole.jsp"></jsp:include>
 <br/>
 <jsp:include page="deleteUser.jsp"></jsp:include>
 <br/>

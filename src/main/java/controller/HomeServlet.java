@@ -1,7 +1,6 @@
 package controller;
 
-import constants.Path;
-import org.apache.log4j.Logger;
+import utils.constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import java.io.IOException;
 @WebServlet({ "/", "/index" })
 public class HomeServlet extends HttpServlet {
     private static final long serialVersionUID = -6931129773575521453L;
-    private static Logger LOGGER = Logger.getLogger(HomeServlet.class);
 
     public HomeServlet() {
         super();
@@ -24,7 +22,6 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        LOGGER.trace("doGet");
         RequestDispatcher dispatcher
                 = this.getServletContext().getRequestDispatcher(Path.HOME);
 
@@ -34,8 +31,6 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        LOGGER.trace("doPost-doGet");
         doGet(request, response);
     }
 

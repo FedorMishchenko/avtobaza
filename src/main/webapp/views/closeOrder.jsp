@@ -19,7 +19,7 @@
 <h3>${closeOrder}</h3>
 <form method="POST" action="${pageContext.request.contextPath}/userTask">
     <input type="text" pattern="([0-9]+)" minlength="1" maxlength="11"
-           placeholder="${orderId}" name="closeOrder">
+           placeholder="${orderId}" name="closeOrder" required>
     <input type="submit" value="${close}">
 </form>
 </body>

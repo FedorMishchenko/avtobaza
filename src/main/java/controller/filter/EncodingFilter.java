@@ -5,6 +5,9 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
+/**
+ * Filter checks encoding and if null, set UTF-8
+ */
 @WebFilter(filterName = "EncodingFilter", urlPatterns = {"/*"}, initParams = {
         @WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")
 })

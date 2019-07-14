@@ -1,6 +1,6 @@
 package controller;
 
-import constants.Path;
+import utils.constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +13,8 @@ import java.io.IOException;
 @WebServlet("/userInfo")
 public class UserAccountInfoServlet extends HttpServlet {
     private static final long serialVersionUID = 5076643494648454287L;
+
+    public UserAccountInfoServlet() { super();}
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

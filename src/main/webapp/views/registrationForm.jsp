@@ -35,7 +35,7 @@
         <tr>
             <td>${login}</td>
             <td><input type="text" placeholder="${loginPL}" name="userName"
-                       minlength="3" maxlength="15" value="${user.userName}"/></td>
+                       minlength="3" maxlength="15" value="${user.userName}" required/></td>
         </tr>
         <tr>
             <td>${password}</td>

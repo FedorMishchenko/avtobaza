@@ -1,9 +1,12 @@
 package controller;
 
-import constants.Path;
+import exceptions.DaoException;
+import exceptions.GlobalExceptionHandler;
+import exceptions.ValidationException;
 import model.entity.UserAccount;
 import service.UserService;
 import utils.SecurityUtils;
+import utils.constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,15 +20,23 @@ import java.io.IOException;
 public class UpdateUserServlet extends HttpServlet {
     private static final long serialVersionUID = -207562576336109450L;
 
+    public UpdateUserServlet() { super();}
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UserAccount current = (UserAccount) request.getSession().getAttribute("loginedUser");
-        UserAccount userAccount = UserService.update(
-                current.getId(),
-                request.getParameter("userName"),
-                request.getParameter("password"),
-                request.getParameter("phone"),
-                request.getParameter("email"));
+        UserAccount userAccount = new UserAccount();
+        request.getSession().setAttribute("errorMassage", "");
+        try {
+            userAccount = UserService.update(
+                    current.getId(),
+                    request.getParameter("userName"),
+                    request.getParameter("password"),
+                    request.getParameter("phone"),
+                    request.getParameter("email"));
+        } catch (ValidationException | DaoException e) {
+            GlobalExceptionHandler.handleException(e, request);
+        }
 
         SecurityUtils.redirect(request,response,userAccount);
 

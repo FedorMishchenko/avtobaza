@@ -25,7 +25,9 @@
 
 <h3>${update}</h3>
 
-<p style="color: red;">${errorMessage}</p>
+<c:if test="${errorMassage != null}">
+    <p class="text-typing">${errorMassage}</p>
+</c:if>
 
 <form method="POST" action="${pageContext.request.contextPath}/updateUser">
     <input type="hidden" name="redirectId" value="${param.redirectId}" />

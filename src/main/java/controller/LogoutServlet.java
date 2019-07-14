@@ -6,9 +6,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.Serializable;
 
+/**
+ * Servlet redirect to home page
+ */
 @WebServlet("/logout")
-public class LogoutServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = 4046368666207824741L;
 
     public LogoutServlet() {
@@ -18,9 +22,8 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().invalidate();
 
-        // Redrect to Home Page.
+        request.getSession().invalidate();
         response.sendRedirect(request.getContextPath() + "/");
 
     }

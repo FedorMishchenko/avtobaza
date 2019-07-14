@@ -50,16 +50,18 @@ ${userName} <b>${loginedUser.userName}</b>
 <br/>
 <a href="listUsers"class="a">${users}</a>
 <a href="listRequests"class="a">${requests}</a>
-
 <br/>
-<jsp:include page="userInfo.jsp"></jsp:include>
+<c:if test="${errorMassage != null}">
+    <p class="text-typing">${errorMassage}</p>
+</c:if>
+<br/>
 <br/>
 <h3>${approveOrder}</h3>
 <form method="POST" action="${pageContext.request.contextPath}/managerTask">
     <input type="text" pattern="([0-9]+)" minlength="1" maxlength="11"
-           placeholder="${userId}" name="approveUserId">
+           placeholder="${userId}" name="approveUserId" required>
     <input type="text" pattern="([0-9]+)" minlength="1" maxlength="11"
-           placeholder="${orderId}" name="approveOrderId">
+           placeholder="${orderId}" name="approveOrderId" required>
     <input type="submit" value="${input}">
 </form>
 </body>

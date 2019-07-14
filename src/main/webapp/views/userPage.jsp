@@ -27,6 +27,9 @@
 </head>
 <body>
 <jsp:include page="index.jsp"></jsp:include>
+<c:if test="${errorMassage != null}">
+    <p class="text-typing">${errorMassage}</p>
+</c:if>
 <br/>
 ${userName} <b>${loginedUser.userName}</b>
 <br/>
