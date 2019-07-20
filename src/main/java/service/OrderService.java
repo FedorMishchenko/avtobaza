@@ -54,7 +54,7 @@ public class OrderService {
     public static List<Order> findAllSortedByID() throws DaoException {
         return OrderDao.findAll()
                 .stream()
-                .sorted(Comparator.comparing(Order::getId).reversed())
+                .sorted(Comparator.comparing(Order::getId))
                 .collect(Collectors.toList());
     }
 

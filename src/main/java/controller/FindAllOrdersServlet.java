@@ -4,7 +4,7 @@ import exceptions.DaoException;
 import exceptions.GlobalExceptionHandler;
 import entity.Order;
 import service.OrderService;
-import utils.constants.Path;
+import constants.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

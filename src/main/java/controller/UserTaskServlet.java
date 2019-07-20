@@ -6,7 +6,7 @@ import entity.Order;
 import entity.UserAccount;
 import service.OrderService;
 import service.UserService;
-import utils.constants.Path;
+import constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

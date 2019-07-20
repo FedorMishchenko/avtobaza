@@ -8,7 +8,7 @@ import exceptions.ValidationException;
 import entity.UserAccount;
 import service.UserService;
 import utils.SecurityUtils;
-import utils.constants.Path;
+import constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import static utils.AppUtils.getLoginedUser;
-import static utils.constants.Massages.ERROR_MASSAGE;
+import static constants.Massages.ERROR_MASSAGE;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet implements Serializable {

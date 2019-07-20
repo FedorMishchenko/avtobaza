@@ -5,7 +5,7 @@ import exceptions.GlobalExceptionHandler;
 import exceptions.ValidationException;
 import service.OrderService;
 import service.UserService;
-import utils.constants.Path;
+import constants.Path;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

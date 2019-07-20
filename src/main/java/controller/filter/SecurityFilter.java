@@ -4,7 +4,7 @@ import config.request.UserRoleRequestWrapper;
 import entity.UserAccount;
 import utils.AppUtils;
 import utils.SecurityUtils;
-import utils.constants.Path;
+import constants.Path;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

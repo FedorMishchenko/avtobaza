@@ -5,8 +5,8 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
-import static utils.constants.Massages.*;
-import static utils.constants.Massages.ERROR_VALIDATION;
+import static constants.Massages.*;
+import static constants.Massages.ERROR_VALIDATION;
 
 public final class GlobalExceptionHandler implements Serializable {
     private static final long serialVersionUID = -5534069821651483450L;

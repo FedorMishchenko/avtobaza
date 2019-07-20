@@ -2,18 +2,17 @@ package utils;
 
 import entity.UserAccount;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 
-
-public class AppUtils {
+public final class AppUtils {
 
     private static int REDIRECT_ID = 0;
 
-    private static final Map<Integer, String> id_uri_map = new HashMap<Integer, String>();
-    private static final Map<String, Integer> uri_id_map = new HashMap<String, Integer>();
+    private static final Map<Integer, String> id_uri_map = new HashMap<>();
+    private static final Map<String, Integer> uri_id_map = new HashMap<>();
 
     // Сохранить информацию пользователя в Session.
     public static void storeLoginedUser(HttpSession session, UserAccount loginedUser) {
@@ -23,8 +22,7 @@ public class AppUtils {
 
     // Получить информацию пользователя, сохраненную в Session.
     public static UserAccount getLoginedUser(HttpSession session) {
-        UserAccount loginedUser = (UserAccount) session.getAttribute("loginedUser");
-        return loginedUser;
+        return (UserAccount) session.getAttribute("loginedUser");
     }
 
     public static int storeRedirectAfterLoginUrl(HttpSession session, String requestUri) {

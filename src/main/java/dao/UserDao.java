@@ -1,7 +1,7 @@
 package dao;
 
 import config.SecurityConfig;
-import utils.constants.SQL;
+import constants.SQL;
 import db.DataSource;
 import exceptions.DaoException;
 import entity.Request;

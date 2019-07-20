@@ -1,6 +1,6 @@
 package dao;
 
-import utils.constants.SQL;
+import constants.SQL;
 import db.DataSource;
 import exceptions.DaoException;
 import entity.UserInfo;

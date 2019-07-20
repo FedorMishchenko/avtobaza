@@ -3,7 +3,7 @@ package controller;
 import exceptions.DaoException;
 import exceptions.ValidationException;
 import service.OrderService;
-import utils.constants.Path;
+import constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 
-import static utils.constants.Massages.*;
+import static constants.Massages.*;
 
 @WebServlet("/orderForm")
 public class OrderFormServlet extends HttpServlet implements Serializable {

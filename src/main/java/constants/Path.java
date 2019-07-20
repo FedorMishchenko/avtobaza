@@ -1,4 +1,4 @@
-package utils.constants;
+package constants;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,17 +39,16 @@ public final class Path {
      */
     public static final List<String> ADMIN_PATTERNS;
 
+
     static {
         USER_PATTERNS =  Arrays.asList("/userInfo","/userTask","/updateUser",
                 "/listOrders","/updateUser","/infoGet","/infoForm","/infoUpdate","/order");
 
         MANAGER_PATTERNS = Arrays.asList("/userInfo","/managerTask","/orderForm",
-                "/listUsers","/order","/allOrders","/byDate","/byDistance",
-                "/byID","/byUserID", "/info","/infoGet","/listRequests");
+                "/listUsers","/order","/allOrders", "/info","/infoGet","/listRequests","/orderSort");
 
         ADMIN_PATTERNS = Arrays.asList("/userInfo","/adminTask","/orderForm",
-                "/listUsers","/order","/allOrders","/byDate","/byDistance",
-                "/byUserID","/byID","/info","/infoGet","/admin");
+                "/listUsers","/order","/allOrders","/info","/infoGet","/admin","/orderSort");
     }
 
     private Path() {throw new UnsupportedOperationException("utility class");}

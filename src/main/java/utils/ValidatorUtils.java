@@ -4,9 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static config.SecurityConfig.*;
-import static utils.constants.Regexp.*;
+import static constants.Regexp.*;
 
-public class ValidatorUtils {
+public final class ValidatorUtils {
 
     public static boolean isValid(String userId, String orderId) {
         if (userId == null || orderId == null) {
@@ -146,10 +146,7 @@ public class ValidatorUtils {
     }
 
     public static boolean isValidRole(String role){
-        if(role.equals(ROLE_USER) || role.equals(ROLE_MANAGER)
-                || role.equals(ROLE_ADMIN)){
-            return true;
-        }
-        return false;
+        return role.equals(ROLE_USER) || role.equals(ROLE_MANAGER)
+                || role.equals(ROLE_ADMIN);
     }
 }

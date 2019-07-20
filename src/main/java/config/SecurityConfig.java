@@ -2,7 +2,7 @@ package config;
 
 import java.util.*;
 
-import static utils.constants.Path.*;
+import static constants.Path.*;
 
 /**
  * Security access web configurations
@@ -44,7 +44,7 @@ public class SecurityConfig {
 
     /**
      *
-     * @param role
+     * @param role userRole
      * @return urlPatterns valid for this role
      */
     public static List<String> getUrlPatternsForRole(String role) {

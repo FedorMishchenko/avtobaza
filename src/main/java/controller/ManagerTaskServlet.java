@@ -3,7 +3,7 @@ package controller;
 import exceptions.DaoException;
 import exceptions.GlobalExceptionHandler;
 import service.OrderService;
-import utils.constants.Path;
+import constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

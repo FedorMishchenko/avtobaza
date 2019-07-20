@@ -12,7 +12,7 @@ import java.util.Set;
 import static utils.AppUtils.storeLoginedUser;
 
 
-public class SecurityUtils {
+public final class SecurityUtils {
 
     // Проверить требует ли данный 'config.request' входа в систему или нет.
     public static boolean isSecurityPage(HttpServletRequest request) {
@@ -54,7 +54,8 @@ public class SecurityUtils {
         int redirectId = -1;
         try {
             redirectId = Integer.parseInt(request.getParameter("redirectId"));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
+            /*NOP*/
         }
         String requestUri = AppUtils.getRedirectAfterLoginUrl(request.getSession(), redirectId);
         if (requestUri != null) {

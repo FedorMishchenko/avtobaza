@@ -6,7 +6,7 @@ import exceptions.ValidationException;
 import entity.UserAccount;
 import entity.UserInfo;
 import service.UserInfoService;
-import utils.constants.Path;
+import constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

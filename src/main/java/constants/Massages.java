@@ -1,4 +1,4 @@
-package utils.constants;
+package constants;
 
 /**
  * Utility class contains error massages

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.Map;
 
-public class UrlPatternUtils {
+public final class UrlPatternUtils {
 
     private static boolean hasUrlPattern(ServletContext servletContext, String urlPattern) {
 
@@ -29,7 +29,7 @@ public class UrlPatternUtils {
         String servletPath = request.getServletPath();
         String pathInfo = request.getPathInfo();
 
-        String urlPattern = null;
+        String urlPattern;
         if (pathInfo != null) {
             urlPattern = servletPath + "/*";
             return urlPattern;

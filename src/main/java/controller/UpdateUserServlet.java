@@ -6,7 +6,7 @@ import exceptions.ValidationException;
 import entity.UserAccount;
 import service.UserService;
 import utils.SecurityUtils;
-import utils.constants.Path;
+import constants.Path;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ public class UpdateUserServlet extends HttpServlet {
     public UpdateUserServlet() { super();}
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         UserAccount current = (UserAccount) request.getSession().getAttribute("loginedUser");
         UserAccount userAccount = new UserAccount();
         request.getSession().setAttribute("errorMassage", "");
