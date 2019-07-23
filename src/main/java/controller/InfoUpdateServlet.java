@@ -16,6 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet performs requests to update userInfo,
+ * coming from the infoUpdate.jsp
+ */
 @WebServlet("/infoUpdate")
 public class InfoUpdateServlet extends HttpServlet {
     private static final long serialVersionUID = -2120303855665413426L;

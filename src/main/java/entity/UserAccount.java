@@ -8,6 +8,7 @@ import java.util.Objects;
  */
 public class UserAccount implements Serializable {
     private static final long serialVersionUID = 1412742662955003440L;
+
     private Integer id;
     private String userName;
     private String password;
@@ -15,7 +16,8 @@ public class UserAccount implements Serializable {
     private String email;
     private String phone;
 
-    public UserAccount() {}
+    public UserAccount() {
+    }
 
     public UserAccount(String userName, String password, String role) {
         this.userName = userName;
@@ -23,13 +25,21 @@ public class UserAccount implements Serializable {
         this.role = role;
     }
 
-    public String getEmail() { return email; }
+    public String getEmail() {
+        return email;
+    }
 
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public String getPhone() { return phone; }
+    public String getPhone() {
+        return phone;
+    }
 
-    public void setPhone(String phone) { this.phone = phone; }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getRole() {
         return role;

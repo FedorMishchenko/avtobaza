@@ -16,6 +16,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Servlet performs requests to display all users,
+ * whose role is user,
+ * coming from the managerPage.jsp or adminPage.jsp
+ */
 @WebServlet("/listUsers")
 public class ListUsersServlet extends HttpServlet {
     private static final long serialVersionUID = 5752405503434618163L;

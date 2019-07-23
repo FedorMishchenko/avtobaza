@@ -7,27 +7,32 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- *  Wrap over BasicDataSource
- *  sets initialization parameters:
- *       set pool connections ,
- *       set idle/max pool size ,
- *       set init pool size ,
- *       set validation query SELECT = min 1 row
- *  jdbc properties located in /resources/jdbc.properties
+ * Wrap over BasicDataSource
+ * sets initialization parameters:
+ * set pool connections ,
+ * set idle/max pool size ,
+ * set init pool size ,
+ * set validation query SELECT = min 1 row
+ * jdbc properties located in /resources/jdbc.properties
  */
 public class DataSource {
     private static BasicDataSource dataSource;
 
-    private DataSource(){}
+    private DataSource() {
+    }
 
     public static synchronized BasicDataSource getInstance() {
         if (dataSource == null) {
-            dataSource =  new BasicDataSource();
+            dataSource = new BasicDataSource();
         }
         init();
         return dataSource;
     }
 
+    /**
+     * The method initialize BasicDataSource with properties stored
+     * in resources.jdbc.properties
+     */
     private static void init() {
         final Properties properties = new Properties();
         try (InputStream resourceAsStream = DataSource.class

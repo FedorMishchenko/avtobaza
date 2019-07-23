@@ -16,6 +16,10 @@ import java.io.Serializable;
 
 import static constants.Massages.*;
 
+/**
+ * Servlet performs requests to create order,
+ * coming from orderForm.jsp
+ */
 @WebServlet("/orderForm")
 public class OrderFormServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = -2584908385925829836L;

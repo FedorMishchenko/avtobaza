@@ -14,7 +14,12 @@ import static utils.AppUtils.storeLoginedUser;
 
 public final class SecurityUtils {
 
-    // Проверить требует ли данный 'config.request' входа в систему или нет.
+    /**
+     * Checks if this login request is required or not
+     *
+     * @param request HttpServletRequest
+     * @return depending on the condition true or false
+     */
     public static boolean isSecurityPage(HttpServletRequest request) {
         String urlPattern = UrlPatternUtils.getUrlPattern(request);
 
@@ -29,7 +34,12 @@ public final class SecurityUtils {
         return false;
     }
 
-    // Проверить имеет ли данный 'config.request' подходящую роль?
+    /**
+     * The method checks if the given request has a suitable role.
+     *
+     * @param request HttpServletRequest
+     * @return depending on the condition true or false
+     */
     public static boolean hasPermission(HttpServletRequest request) {
         String urlPattern = UrlPatternUtils.getUrlPattern(request);
 
@@ -46,18 +56,26 @@ public final class SecurityUtils {
         }
         return false;
     }
+
+    /**
+     * The method redirects after logging in to an accessible userInfo page
+     *
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @param userAccount UserAccount
+     * @throws IOException
+     */
     public static void redirect(HttpServletRequest request, HttpServletResponse response,
                                     UserAccount userAccount) throws IOException {
         storeLoginedUser(request.getSession(), userAccount);
 
-        //
         int redirectId = -1;
         try {
             redirectId = Integer.parseInt(request.getParameter("redirectId"));
         } catch (Exception ignored) {
             /*NOP*/
         }
-        String requestUri = AppUtils.getRedirectAfterLoginUrl(request.getSession(), redirectId);
+        String requestUri = AppUtils.getRedirectAfterLoginUrl(/*request.getSession(),*/ redirectId);
         if (requestUri != null) {
             response.sendRedirect(requestUri);
         } else {

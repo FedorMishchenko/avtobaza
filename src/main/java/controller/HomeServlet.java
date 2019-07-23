@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet performs requests to display the home page
+ */
 @WebServlet({ "/", "/index" })
 public class HomeServlet extends HttpServlet {
     private static final long serialVersionUID = -6931129773575521453L;

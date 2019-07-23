@@ -16,6 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * Servlet performs requests to display userInfo using user id,
+ * coming from the userPage.jsp
+ */
 @WebServlet("/infoGet")
 public class InfoGetServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = 9055632404847275937L;

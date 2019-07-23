@@ -6,6 +6,9 @@ import java.util.regex.Pattern;
 import static config.SecurityConfig.*;
 import static constants.Regexp.*;
 
+/**
+ * Utility class used for validation input data
+ */
 public final class ValidatorUtils {
 
     public static boolean isValid(String userId, String orderId) {

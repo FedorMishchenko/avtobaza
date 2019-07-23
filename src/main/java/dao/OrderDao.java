@@ -2,16 +2,14 @@ package dao;
 
 import constants.SQL;
 import db.DataSource;
-import exceptions.DaoException;
 import entity.Order;
+import exceptions.DaoException;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * DAO used to access the table 'orders'
@@ -23,7 +21,6 @@ public class OrderDao {
     private static ResultSet rs;
     private static Connection connection;
 
-
     static {
         dataSource = DataSource.getInstance();
         pstmt = null;
@@ -31,42 +28,57 @@ public class OrderDao {
         connection = null;
     }
 
-
+    /**
+     * The method create a record in database table
+     *
+     * @param startPoint  String
+     * @param destination String
+     * @param distance    String
+     * @param status      String
+     * @return Order
+     * @throws DaoException checked exception wrapping SQLException
+     */
     public static Order createOrder(String startPoint, String destination,
                                     String distance, String status) throws DaoException {
-            Order order = new Order();
+        Order order = new Order();
+        try {
+            connection = dataSource.getConnection();
+            pstmt = connection.prepareStatement(SQL.CREATE_ORDER, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, startPoint);
+            pstmt.setString(2, destination);
+            pstmt.setString(3, distance);
+            pstmt.setString(4, status);
+            pstmt.executeUpdate();
+            rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                order.setId(rs.getInt(1));
+                order.setStartPoint(startPoint);
+                order.setDestination(destination);
+                order.setDistance(Integer.valueOf(distance));
+                order.setStatus(status);
+            }
+        } catch (SQLException e) {
+            LOGGER.warn(e.getMessage());
+            throw new DaoException();
+        } finally {
             try {
-                connection = dataSource.getConnection();
-                pstmt = connection.prepareStatement(SQL.CREATE_ORDER, Statement.RETURN_GENERATED_KEYS);
-                pstmt.setString(1, startPoint);
-                pstmt.setString(2, destination);
-                pstmt.setString(3, distance);
-                pstmt.setString(4, status);
-                pstmt.executeUpdate();
-                rs = pstmt.getGeneratedKeys();
-                if (rs.next()) {
-                    order.setId(rs.getInt(1));
-                    order.setStartPoint(startPoint);
-                    order.setDestination(destination);
-                    order.setDistance(Integer.valueOf(distance));
-                    order.setStatus(status);
-                }
+                rs.close();
+                pstmt.close();
+                connection.close();
             } catch (SQLException e) {
                 LOGGER.warn(e.getMessage());
-                throw new DaoException();
-            } finally {
-                try {
-                    rs.close();
-                    pstmt.close();
-                    connection.close();
-                } catch (SQLException e) {
-                    LOGGER.warn(e.getMessage());
-                }
             }
-            return order;
         }
+        return order;
+    }
 
-
+    /**
+     * The method finds the record in database by the given id
+     *
+     * @param id Order id
+     * @return Order
+     * @throws DaoException checked exception wrapping SQLException
+     */
     public static Order findOrder(Integer id) throws DaoException {
         Order order = new Order();
         try {
@@ -92,7 +104,12 @@ public class OrderDao {
         return order;
     }
 
-
+    /**
+     * The method delete record in database table by id
+     *
+     * @param id Order id
+     * @throws DaoException checked exception wrapping SQLException
+     */
     public static void delete(String id) throws DaoException {
         try {
             connection = dataSource.getConnection();
@@ -112,6 +129,12 @@ public class OrderDao {
         }
     }
 
+    /**
+     * The method finds all records in the table
+     *
+     * @return list Orders
+     * @throws DaoException checked exception wrapping SQLException
+     */
     public static List<Order> findAll() throws DaoException {
         List<Order> list = new ArrayList<>();
         try {
@@ -130,11 +153,15 @@ public class OrderDao {
                 LOGGER.warn(e.getMessage());
             }
         }
-        return list.stream()
-                .sorted(Comparator.comparing(Order::getId).reversed())
-                .collect(Collectors.toList());
+        return list;
     }
 
+    /**
+     * The method finds all records in the table where status equals 'open'
+     *
+     * @return list orders
+     * @throws DaoException checked exception wrapping SQLException
+     */
     public static List<Order> findAllOpen() throws DaoException {
         List<Order> list = new ArrayList<>();
         try {
@@ -156,7 +183,13 @@ public class OrderDao {
         return list;
     }
 
-
+    /**
+     * The method finds all records in the table linked with the given user id
+     *
+     * @param id User id
+     * @return list Orders
+     * @throws DaoException checked exception wrapping SQLException
+     */
     public static List<Order> findAll(Integer id) throws DaoException {
         List<Order> list = new ArrayList<>();
         try {
@@ -176,12 +209,15 @@ public class OrderDao {
                 LOGGER.warn(e.getMessage());
             }
         }
-        return list.stream()
-                .distinct()
-                .sorted(Comparator.comparing(Order::getId).reversed())
-                .collect(Collectors.toList());
+        return list;
     }
 
+    /**
+     * The method set status LIKE 'close'
+     *
+     * @param id Order id
+     * @throws DaoException checked exception wrapping SQLException
+     */
     public static void closeOrder(String id) throws DaoException {
         try {
             connection = dataSource.getConnection();
@@ -191,7 +227,7 @@ public class OrderDao {
         } catch (SQLException e) {
             LOGGER.warn(e.getMessage());
             throw new DaoException();
-        }finally {
+        } finally {
             try {
                 pstmt.close();
                 connection.close();
@@ -201,6 +237,14 @@ public class OrderDao {
         }
     }
 
+    /**
+     * The method makes a transaction, first associates the order and user,
+     * then deletes the request. If failed to delete, cancels the entire operation
+     *
+     * @param userId  User id
+     * @param orderId Order id
+     * @throws DaoException checked exception wrapping SQLException
+     */
     public static void approveOrder(String userId, String orderId) throws DaoException {
         try {
             connection = dataSource.getConnection();
@@ -223,7 +267,7 @@ public class OrderDao {
                 /*NOP*/
             }
             throw new DaoException();
-        }finally {
+        } finally {
             try {
                 pstmt.close();
                 connection.setAutoCommit(true);
@@ -234,6 +278,12 @@ public class OrderDao {
         }
     }
 
+    /**
+     * private auxiliary method
+     *
+     * @param list list Orders
+     * @throws SQLException checked exception wrapping SQLException
+     */
     private static void createListOrders(List<Order> list) throws SQLException {
         rs = pstmt.executeQuery();
         while (rs.next()) {
@@ -243,6 +293,12 @@ public class OrderDao {
         }
     }
 
+    /**
+     * private auxiliary method parse result set ​​and sets to Order all values
+     *
+     * @param order new Order with empty fields
+     * @throws SQLException checked exception wrapping SQLException
+     */
     private static void setValue(Order order) throws SQLException {
         order.setId(rs.getInt("id"));
         order.setStartPoint(rs.getString("start_point"));

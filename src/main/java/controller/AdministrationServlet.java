@@ -15,6 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet performs requests,
+ * about finding all users whose role is admin or manager,
+ * coming from the adminPage.jsp
+ */
 @WebServlet("/admin")
 public class AdministrationServlet extends HttpServlet {
     private static final long serialVersionUID = -7018663483968986116L;

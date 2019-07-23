@@ -18,6 +18,10 @@ import java.io.IOException;
 
 import static utils.AppUtils.getLoginedUser;
 
+/**
+ * Servlet performs requests to create userInfo,
+ * coming from the infoForm.jsp
+ */
 @WebServlet("/infoForm")
 public class InfoFormServlet extends HttpServlet {
     private static final long serialVersionUID = -3742507496137199119L;

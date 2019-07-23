@@ -8,6 +8,7 @@ import java.util.Objects;
  */
 public class Order implements Serializable {
     private static final long serialVersionUID = 8078266908707449532L;
+
     private Integer id;
     private String startPoint;
     private String destination;
@@ -16,7 +17,8 @@ public class Order implements Serializable {
     private String status;
     private Integer userId;
 
-    public Order(){}
+    public Order() {
+    }
 
     public Integer getId() {
         return id;

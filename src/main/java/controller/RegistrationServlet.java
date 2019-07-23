@@ -22,6 +22,10 @@ import java.io.Serializable;
 import static utils.AppUtils.getLoginedUser;
 import static constants.Massages.ERROR_MASSAGE;
 
+/**
+ * Servlet performs requests to register new user,
+ * coming from registrationForm.jsp
+ */
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = -4795113449650215199L;

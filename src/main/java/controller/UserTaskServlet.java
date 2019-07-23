@@ -18,6 +18,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Servlet performs user's requests
+ * coming from the userPage.jsp
+ */
 @WebServlet("/userTask")
 public class UserTaskServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = 2078982781727188991L;

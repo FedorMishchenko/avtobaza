@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet performs requests about finding all orders,
+ * coming from the adminPage.jsp or managerPage.jsp
+ */
 @WebServlet("/allOrders")
 public class FindAllOrdersServlet extends HttpServlet {
     private static final long serialVersionUID = -2291561463551887154L;

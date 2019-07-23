@@ -8,14 +8,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * Servlet performs requests to set user role
+ * coming from adminPage.jsp
+ */
 @WebServlet("/setUserRole")
 public class SetUserRoleServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = -1198474063247322171L;
 
     public SetUserRoleServlet() { super();}
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
     }
 

@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * Servlet redirect to home page
+ * Servlet performs logout request,
+ * coming from index.jsp
+ * After logout redirect to home page
  */
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet implements Serializable {

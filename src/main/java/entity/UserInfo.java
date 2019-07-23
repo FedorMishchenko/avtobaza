@@ -8,13 +8,15 @@ import java.util.Objects;
  */
 public class UserInfo implements Serializable {
     private static final long serialVersionUID = -2417171095891851861L;
+
     private Integer id;
     private String truck;
     private String status;
     private String capacity;
     private Integer userID;
 
-    public UserInfo(){}
+    public UserInfo() {
+    }
 
     public Integer getId() {
         return id;

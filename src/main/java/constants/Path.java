@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Utility class constants used in commands to access the page
+ * Utility class constants used to access the page
  */
 public final class Path {
 
@@ -41,15 +41,17 @@ public final class Path {
 
 
     static {
-        USER_PATTERNS =  Arrays.asList("/userInfo","/userTask","/updateUser",
-                "/listOrders","/updateUser","/infoGet","/infoForm","/infoUpdate","/order");
+        USER_PATTERNS = Arrays.asList("/userInfo", "/userTask", "/updateUser",
+                "/listOrders", "/updateUser", "/infoGet", "/infoForm", "/infoUpdate", "/order");
 
-        MANAGER_PATTERNS = Arrays.asList("/userInfo","/managerTask","/orderForm",
-                "/listUsers","/order","/allOrders", "/info","/infoGet","/listRequests","/orderSort");
+        MANAGER_PATTERNS = Arrays.asList("/userInfo", "/managerTask", "/orderForm",
+                "/listUsers", "/order", "/allOrders", "/info", "/infoGet", "/listRequests", "/orderSort");
 
-        ADMIN_PATTERNS = Arrays.asList("/userInfo","/adminTask","/orderForm",
-                "/listUsers","/order","/allOrders","/info","/infoGet","/admin","/orderSort");
+        ADMIN_PATTERNS = Arrays.asList("/userInfo", "/adminTask", "/orderForm",
+                "/listUsers", "/order", "/allOrders", "/info", "/infoGet", "/admin", "/orderSort");
     }
 
-    private Path() {throw new UnsupportedOperationException("utility class");}
+    private Path() {
+        throw new UnsupportedOperationException("utility class");
+    }
 }

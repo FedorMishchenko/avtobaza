@@ -16,6 +16,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Servlet performs requests to display
+ * all orders where status is open.
+ * Requests can coming from userPage.jsp, managerPage.jsp, adminPage.jsp
+ */
 @WebServlet("/order")
 public class OrderServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = -3118312440665956324L;

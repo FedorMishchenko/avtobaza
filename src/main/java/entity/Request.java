@@ -13,7 +13,8 @@ public class Request implements Serializable {
     private Integer userId;
     private Integer orderId;
 
-    public Request(){}
+    public Request() {
+    }
 
     public Integer getId() {
         return id;

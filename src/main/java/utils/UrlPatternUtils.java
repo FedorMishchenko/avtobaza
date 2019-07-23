@@ -24,6 +24,11 @@ public final class UrlPatternUtils {
         return false;
     }
 
+    /**
+     *
+     * @param request HttpServletRequest
+     * @return String pattern
+     */
     public static String getUrlPattern(HttpServletRequest request) {
         ServletContext servletContext = request.getServletContext();
         String servletPath = request.getServletPath();

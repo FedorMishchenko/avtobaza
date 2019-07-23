@@ -35,7 +35,6 @@ public class SecurityConfig {
     }
 
     /**
-     *
      * @return all available Roles
      */
     public static Set<String> getAllAppRoles() {
@@ -43,7 +42,6 @@ public class SecurityConfig {
     }
 
     /**
-     *
      * @param role userRole
      * @return urlPatterns valid for this role
      */

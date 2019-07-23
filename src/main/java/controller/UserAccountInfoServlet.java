@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet performs requests to display userAccount information,
+ * coming from index.jsp
+ */
 @WebServlet("/userInfo")
 public class UserAccountInfoServlet extends HttpServlet {
     private static final long serialVersionUID = 5076643494648454287L;

@@ -16,6 +16,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Servlet performs requests to display list orders
+ * sorted by :
+ * distance,
+ * or id,
+ * or date,
+ * or user id.
+ * Requests can coming from managerPage.jsp or adminPage.jsp
+ *
+ */
 @WebServlet("/orderSort")
 public class OrdersSortServlet extends HttpServlet {
     private static final long serialVersionUID = -5089303457442592467L;

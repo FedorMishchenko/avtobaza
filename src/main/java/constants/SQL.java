@@ -47,11 +47,10 @@ public final class SQL {
             "WHERE user_id = ?";
 
 
-
     /**
      * private constructor, throw UnsupportedOperationException
      */
-    private SQL(){
+    private SQL() {
         throw new UnsupportedOperationException("utility class");
     }
 

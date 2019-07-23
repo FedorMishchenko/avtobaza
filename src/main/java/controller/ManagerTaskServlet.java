@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * Servlet performs manager requests
+ * coming from managerPage.jsp
+ */
 @WebServlet("/managerTask")
 public class ManagerTaskServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = 2380446956990990962L;

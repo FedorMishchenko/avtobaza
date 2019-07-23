@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * Servlet performs requests to display all orders of specific user,
+ * coming from the userPage.jsp
+ */
 @WebServlet ("/listOrders")
 public class ListUserOrdersServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = -1362997768747746408L;

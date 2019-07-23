@@ -16,6 +16,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Servlet performs requests about finding all Requests (from table 'request')
+ * coming from the managerPage.jsp
+ */
 @WebServlet("/listRequests")
 public class ListRequestsServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = -3583929740574903484L;

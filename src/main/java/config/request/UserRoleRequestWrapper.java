@@ -17,7 +17,6 @@ import java.util.List;
  * be created and used by the UserRoleFilter.
  *
  * @author F.Mishchenko
- *
  */
 public class UserRoleRequestWrapper extends HttpServletRequestWrapper {
 

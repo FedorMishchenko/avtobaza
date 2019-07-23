@@ -26,6 +26,16 @@ public class UserInfoDao {
         connection = null;
     }
 
+    /**
+     * The method create a record in database table
+     *
+     * @param truck    String
+     * @param status   String
+     * @param capacity String
+     * @param userID   String
+     * @return UserInfo
+     * @throws DaoException checked exception wrapping SQLException
+     */
     public static UserInfo create(String truck, String status,
                                   String capacity, Integer userID) throws DaoException {
         UserInfo userInfo = new UserInfo();
@@ -58,6 +68,13 @@ public class UserInfoDao {
         return userInfo;
     }
 
+    /**
+     * The method finds a record by id in database table
+     *
+     * @param id Integer
+     * @return UserInfo
+     * @throws DaoException checked exception wrapping SQLException
+     */
     public static UserInfo findInfoByID(Integer id) throws DaoException {
         UserInfo info = new UserInfo();
         try {
@@ -87,6 +104,16 @@ public class UserInfoDao {
         return info;
     }
 
+    /**
+     * The method updates the record in table with specified values
+     *
+     * @param truck    String
+     * @param status   String
+     * @param capacity String
+     * @param userID   String
+     * @return updated UserInfo
+     * @throws DaoException checked exception wrapping SQLException
+     */
     public static UserInfo update(String truck, String status, String capacity, Integer userID) throws DaoException {
         UserInfo info = new UserInfo();
         try {
@@ -111,6 +138,11 @@ public class UserInfoDao {
         return info;
     }
 
+    /**
+     * private auxiliary method parse result set ​​and sets to Order all values
+     *
+     * @throws SQLException which will be wrapped by DaoException
+     */
     private static void setValue(String truck, String status, String capacity, Integer userID) throws SQLException {
         pstmt.setString(1, truck);
         pstmt.setString(2, status);

@@ -27,6 +27,14 @@ public class SecurityFilter implements Filter {
     public void destroy() {
     }
 
+    /**
+     * The method checks for access rights before entering the page
+     *
+     * @param req   ServletRequest
+     * @param resp  ServletResponse
+     * @param chain FilterChain
+     * @throws IOException
+     */
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
             throws IOException, ServletException {
@@ -35,12 +43,11 @@ public class SecurityFilter implements Filter {
 
         String servletPath = request.getServletPath();
 
-        /* User info stored in session
-         *  (after successful login).
-         */
+        //  User info stored in session
+        // (after successful login).
         UserAccount loginedUser = getLoginedUser(request.getSession());
 
-        if (servletPath.equals("/login" ) || servletPath.equals("/registration")) {
+        if (servletPath.equals("/login") || servletPath.equals("/registration")) {
             chain.doFilter(request, response);
             return;
         }
@@ -50,32 +57,29 @@ public class SecurityFilter implements Filter {
             String userName = loginedUser.getUserName();
             String role = loginedUser.getRole();
 
-         /*
-          *  Old request packet using new request with information userName and role.
-          */
+
+            // Old request using new request with information userName and role.
             wrapRequest = new UserRoleRequestWrapper(userName, role, request);
         }
 
-        /*
-         * Pages requiring login.
-         */
+
+        //Pages requiring login.
         if (SecurityUtils.isSecurityPage(request)) {
 
-            /* If the user is not logged in yet,
-            * redirect to login page.
-            */
+            // If the user is not logged in yet,
+            // redirect to login page.
             if (loginedUser == null) {
 
                 String requestUri = request.getRequestURI();
 
-                /* Save the current page for redirection after successful login.*/
-                int redirectId = AppUtils.storeRedirectAfterLoginUrl(request.getSession(), requestUri);
+                // Save the current page for redirection after successful login.
+                int redirectId = AppUtils.storeRedirectAfterLoginUrl(/*request.getSession(),*/ requestUri);
 
                 response.sendRedirect(wrapRequest.getContextPath() + "/login?redirectId=" + redirectId);
                 return;
             }
 
-            /*Check whether the user has a valid role or not*/
+            // Check whether the user has a valid role or not
             boolean hasPermission = SecurityUtils.hasPermission(wrapRequest);
             if (!hasPermission) {
 
